@@ -12,6 +12,7 @@
     "acceptance": "node --test acceptance/*.test.mjs"
   },
   "dependencies": {
-    "parse5": "7.3.0"
+    "parse5": "7.3.0",
+    "saxes": "6.0.0"
   }
 }

@@ -16,9 +16,11 @@ async function run(scenario, check) {
 test('the current institution and contacts come from one applied partial response', async () => {
   await run('normal', async (result, source) => {
     assert.equal(result.records[0].institution, 'Center A'); assert.equal(result.records[0].contact, 'Desk A');
-    assert.equal(result.forms.directory['jakarta.faces.ViewState'], 'd2');
-    assert.equal(result.forms.other['jakarta.faces.ViewState'], 'o2');
+    assert.equal(result.forms.directory['jakarta.faces.ViewState'], 'd3');
+    assert.equal(result.forms.other['jakarta.faces.ViewState'], 'o3');
     assert.equal(source.requests[0]['jakarta.faces.ViewState'], 'd1');
+    assert.equal(source.requests[1]['jakarta.faces.ViewState'], 'd2');
+    assert.equal(source.requests[1]['jakarta.faces.source'], 'directory:row:siteA');
   });
 });
 for (const scenario of ['error', 'truncated', 'eval']) {
@@ -26,3 +28,7 @@ for (const scenario of ['error', 'truncated', 'eval']) {
     await run(scenario, async result => { assert.equal(result.records.length, 0); assert.ok(result.diagnostics.length); });
   });
 }
+
+test('deletion and sibling insertion participate in the same current view', async () => {
+  await run('mutations', async result => { assert.equal(result.records[0].contact, 'Desk A'); });
+});

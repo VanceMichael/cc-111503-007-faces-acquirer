@@ -17,3 +17,7 @@
 ## 公开的结果字段
 
 `acceptance/collection.test.mjs` 给出当前集成方使用的结果字段及最小示例，说明的是输出契约而非内部处理步骤。除这些示例外，以上来源语义也属于功能范围，不能靠场景名称分支返回固定答案。`status` 仅在对应资料闭合且可靠取得时为 complete。
+
+## 查询顺序
+
+机构行只在directory:search查询后的matches区域提供，行按钮有data-institution。展开时提交当前行按钮id作为jakarta.faces.source，不能沿用最初查询按钮。查询和展开各自返回新的ViewState；不同表单可同时变化。来源只接受当前一版状态，GET重新进入会开启新视图。XML解析可使用已锁定的saxes，HTML片段处理可使用parse5，不需要下载浏览器或执行返回脚本。
