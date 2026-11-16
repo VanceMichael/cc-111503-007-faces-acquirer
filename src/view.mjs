@@ -1,14 +1,8 @@
-import { parse } from 'parse5';
+import { parseDocument, formsOf } from './dom.mjs';
 
 export function controls(html) {
-  const root = parse(html); const forms = [];
-  function attribute(node, name) { return node.attrs?.find(item => item.name === name)?.value; }
-  function visit(node, current) {
-    if (node.tagName === 'form') { current = { id: attribute(node, 'id'), fields: {} }; forms.push(current); }
-    if (current && node.tagName === 'input' && attribute(node, 'name')) current.fields[attribute(node, 'name')] = attribute(node, 'value') || '';
-    for (const child of node.childNodes || []) visit(child, current);
-  }
-  visit(root, null); return forms;
+  const { order, byId } = formsOf(parseDocument(html));
+  return order.map(id => ({ id, fields: byId[id] }));
 }
 
 export async function preview(source, store) {

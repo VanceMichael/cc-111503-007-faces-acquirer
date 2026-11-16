@@ -13,6 +13,8 @@
 - delete/insert/attributes改变有效控件
 - XML截断或error不形成半份视图
 - redirect后旧元素身份不继续复用
+- 局部响应里的 DTD、eval 或未知指令使整次变化不接受并留下诊断
+- 查询只采信本次查询响应实际刷新出的 matches 行，不使用页面其他位置的隐藏模板
 
 ## 公开的结果字段
 
